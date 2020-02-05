@@ -1,0 +1,48 @@
+ECE 487/587 Spring 2020
+Laboratory 1 – Introduction to the Arduino Platform
+
+1.	Introduction
+This particular laboratory exercise is to familiarize you with the Arduino platform.    
+
+2.	Requirements
+You are responsible for having your own Arduino platform, computer from which to program it, and the necessary cables to connect them.  You will need to download the Arduino IDE to your own computer.  The IDE is available from http://arduino.cc/en/main/software.  You should follow the directions provided in the Getting Started document (http://arduino.cc/en/Guide/Windows) for your particular computer’s operating system.  The link I provided is for Windows.  There are similar directions for Linux and Mac OS X.
+
+In addition to your Arduino platform and computer, you will also need the following for this lab:
+•	Solderless breadboard
+•	1K ohm resistor
+•	LED 
+•	Wires for use with breadboard
+
+3.	Laboratory Tasks
+You are to create a new application that will execute on your Arduino platform based upon the Blink example that is available in the Arduino Examples folder that you downloaded as part of the IDE. 
+
+Your application will use the serial monitor to interact with the user.  The application will begin by printing a prompt to the screen asking for user input.  Until the user provides their first input, the LEDs are always off. At the first prompt, if the user provides a ‘g’, your application will continuously blink the LEDs until new user input is provided.  If the user enters an ‘s’ at the prompt, the application should stop blinking the LEDs (i.e. turn off both LEDS) until new user input is provided.
+
+Your application must blink the onboard LED connected to PIN 13 such that the LED is on for 2 seconds and off for 1 second.  Also, you will construct a circuit on your breadboard that blinks an external (off-board) LED exactly out-of-phase with the onboard LED.  That is, the LED on your breadboard should be off for 2 seconds (while the onboard LED is on) and on for 1 second (while the onboard LED is off). You are free to use any of the I/O pins available to you for your circuit.  
+
+Your program should continue to operate in its previous “mode” until new user input is provided.  You are welcome to use the “delay” function to provide a close approximation of the timing required for this lab. More precise timing using the on-board timers is not necessary for Lab 1. 
+
+4.	Grading
+
+Due Date:  02/07/2020 by 5:00 P.M. 
+No late assignments will be accepted.  
+
+All students must demo/explain their project in the lab (SERC 2005) to the TA, Ben Sawyer, by the deadline.  The assignment will be graded at the time of the demo.  There will be no re-submissions (for each lab attempt), so all debugging is the responsibility of the student (the TA doesn’t have time to help you debug your code!).  Each student will have to sign up for a grading/demo time, and the assigned time is the grading/demo time! No exceptions. Arrive a few minutes early to get set up and get ready for your demo time to begin. We want to stay on schedule, so be ready to go when your time starts. If you miss your demo time, you will receive a grade of zero for the lab attempt, and you will have to resubmit. The signup sheet will be posted in SERC 2005 the week before the lab is due. The TA will schedule all grading activities according to the signup sheet. The TA is not able to schedule independent times outside of those posted on the signup sheet. 
+
+At the beginning of your demo, you must turn in a hardcopy of your code with the grading sheet stapled as page 1. The printout of your code should match the code that is being executed!  If it does not match, your grade for the lab will be zero.  Your code should have a header comment indicating your name, CWID, lab assignment, and other pertinent info. I encourage you to print your code from the IDE (or Notepad++) to preserve the formatting which will be considered as part of the “programming practices” grade.  
+
+I encourage all students to PLAN AHEAD regarding deadlines.  Deadlines are LIMITS not GOALS! All students should plan to get their assignments done with time to spare to avoid missing the deadline and to get a demo time.  You may need to be flexible when trying to get a demo time. Deadlines are judged based upon when the assignment is demoed (i.e. graded), not when a student says he/she is finished.  If the assignment is not graded by the deadline, it will not be accepted and the student will receive a zero for that lab attempt.  
+
+Grading Guidelines that will be used for Lab #1:
+
+Good Programming Style:
+1)	Comments
+2)	Indentation
+3)	Good/meaningful variable names
+4)	Minimum/wise usage of global variables; unnecessary use of variables
+5)	Inefficient code
+
+Grade Breakdown:
+30 pts – Good programming practices and oral description of code/circuit
+70 pts – Functionality
+
