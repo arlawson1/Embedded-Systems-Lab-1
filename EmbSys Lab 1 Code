@@ -1,0 +1,85 @@
+void setup() {
+    // put your setup code here, to run once:                 // This code was written by Andrew Lawson, CWID 1187 8092
+    pinMode(13, OUTPUT);                                      // This program uses a simple finite-state machine to blink LEDs on
+    pinMode(22, OUTPUT);                                      //   an Arduino Mega. The states are controlled via the Serial monitor.
+    Serial.begin(9600);                                       //   An input of 'g' starts blinking the LEDs, while an input of 's'
+    digitalWrite(13, LOW);                                    //   will stop the LEDs from blinking. Once started, the LEDs will blink
+    digitalWrite(22, LOW);                                    //   out of sync at a ratio of 2:1 (2 seconds on, 1 second off for the
+}                                                             //   onboard LED, and 2 seconds off, 1 second on for the external LED.
+
+void loop() {
+    // put your main code here, to run repeatedly:
+    char keyboardInput;                                       // char used to capture input from the Serial monitor
+    String inputString;                                       // keyboardInput is appended to inputString, which is used for comparisons
+    enum currentState {OFF, ON2SECONDS, OFF1SECOND};
+    currentState state = OFF;                                 // LEDs are initally off
+
+    Serial.print("Enter 'g' as input to start blinking the LEDs. Once the LEDs are blinking, enter 's' as input to make them stop.\n");
+    
+    while(1){
+        switch(state){
+            case OFF :    
+                digitalWrite(13, LOW);
+                digitalWrite(22, LOW);
+                if(Serial.available() > 0){                   // read input from Serial monitor if it is available
+                    inputString = "";                         // reset inputString (necessary so keyboardInput isn't appended to an old string
+                    inputString = Serial.readString();
+                }
+                if(inputString == "g"){                       // if the string matches 'g', set the state to start blinking
+                    state = ON2SECONDS;
+                    Serial.print("enter 's' to stop blinking\n");
+                    break;
+                }
+                else{
+                    delay(1);                                 // wait for more input
+                    state = OFF;                              // force state to loop until instructed otherwise
+                    break;
+                }
+                
+            case ON2SECONDS :
+                digitalWrite(13, HIGH);                       // onboard LED is now on, while external LED is off
+                digitalWrite(22, LOW);
+                for(int i = 0; i < 2000; i++){                // roughly 2000ms loop for the ON2SECONDS state
+                    if(Serial.available() > 0){
+                        inputString = "";
+                        inputString = Serial.readString();
+                    }
+                    if(inputString == "s"){                   // if string matches 's', IMMEDIATELY stop blinking and set state to OFF
+                        state = OFF;
+                        Serial.print("Turning off blinking\n");
+                        break;
+                    }
+                    if(i >= 1999){                            // otherwise, if state reaches 2000ms, jump to next state
+                        state = OFF1SECOND;
+                        break;
+                    }
+                    else{
+                        delay(1);                             // wait for either input to match 's' or state time-out
+                    }
+                }
+                break;
+                
+            case OFF1SECOND : 
+                digitalWrite(13, LOW);                        // onboard is now off, and external LED is now on
+                digitalWrite(22, HIGH);
+                for(int i = 0; i < 1000; i++){                // roughly 1000ms loop
+                    if(Serial.available() > 0){
+                        inputString = "";
+                        inputString = Serial.readString();
+                    }
+                    if(inputString == "s"){                   // if input matches 's', stop blinking, set to OFF state
+                        state = OFF;
+                        break;
+                    }
+                    if(i >= 999){                             // state time-out conditional
+                        state = ON2SECONDS;
+                        break;
+                    }
+                    else{
+                        delay(1);                             // wait for 's' or time-out
+                    }
+                }
+                break;
+        }
+    }
+}
